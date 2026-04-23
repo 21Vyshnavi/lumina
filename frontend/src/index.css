@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-gray-950 text-gray-100 antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-gray-700 rounded-full; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700
+           text-white text-sm font-medium rounded-lg transition-colors duration-150
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700
+           text-gray-200 text-sm font-medium rounded-lg border border-gray-700
+           transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .input-field {
+    @apply w-full px-3 py-2.5 bg-gray-900 border border-gray-700 rounded-lg
+           text-gray-100 text-sm placeholder-gray-500
+           focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent
+           transition-colors duration-150;
+  }
+  .card {
+    @apply bg-gray-900 border border-gray-800 rounded-xl;
+  }
+}
+
+/* Markdown prose inside chat bubbles */
+.prose-chat p { @apply mb-3 last:mb-0 leading-relaxed; }
+.prose-chat ul { @apply list-disc pl-5 mb-3 space-y-1; }
+.prose-chat ol { @apply list-decimal pl-5 mb-3 space-y-1; }
+.prose-chat code { @apply bg-gray-800 text-brand-400 text-xs px-1.5 py-0.5 rounded font-mono; }
+.prose-chat pre { @apply bg-gray-800 rounded-lg p-3 overflow-x-auto mb-3; }
+.prose-chat pre code { @apply bg-transparent text-gray-300 text-xs p-0; }
+.prose-chat h1,h2,h3 { @apply font-semibold mb-2 mt-4; }
+.prose-chat strong { @apply font-semibold; }
+.prose-chat a { @apply text-brand-400 underline; }

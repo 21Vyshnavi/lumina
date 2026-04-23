@@ -1,0 +1,44 @@
+services:
+  # ─── Backend API ─────────────────────────────────────────────
+  - type: web
+    name: lumina-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    rootDir: backend
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: lumina-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 1440
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+      - key: ALLOWED_ORIGINS
+        value: https://lumina-app.onrender.com
+
+  # ─── Frontend ────────────────────────────────────────────────
+  - type: web
+    name: lumina-app
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npx serve dist -l $PORT
+    rootDir: frontend
+    envVars:
+      - key: VITE_API_URL
+        value: https://lumina-api.onrender.com
+
+# ─── PostgreSQL Database ──────────────────────────────────────
+databases:
+  - name: lumina-db
+    databaseName: lumina_db
+    user: lumina
+    plan: free
