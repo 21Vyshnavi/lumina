@@ -1,8 +1,8 @@
 # Lumina — AI-Powered Knowledge Assistant
 
-> A production-ready full-stack web application with real-time AI chat, document management, and intelligent summarization — built with React, FastAPI, PostgreSQL, and the Anthropic Claude API.
+> A production-ready full-stack web application with real-time AI chat, document management, and intelligent summarization — built with React, FastAPI, PostgreSQL, and the Google Gemini API.
 
-![CI/CD](https://github.com/your-username/lumina/actions/workflows/ci.yml/badge.svg)
+![CI/CD](https://github.com/21Vyshnavi/lumina/actions/workflows/ci.yml/badge.svg)
 
 ---
 
@@ -10,9 +10,9 @@
 
 | Service   | URL                                  |
 |-----------|--------------------------------------|
-| Frontend  | https://lumina-app.onrender.com      |
-| Backend   | https://lumina-api.onrender.com      |
-| API Docs  | https://lumina-api.onrender.com/docs |
+| Frontend  | YOUR_ACTUAL_RENDER_FRONTEND_URL      |
+| Backend   | YOUR_ACTUAL_RENDER_BACKEND_URL      |
+| API Docs  | YOUR_ACTUAL_RENDER_BACKEND_URL/docs |
 
 ---
 
@@ -21,12 +21,12 @@
 **AI-Powered Chat**
 - Real-time streaming responses via Server-Sent Events (SSE)
 - Multi-turn conversation memory with persistent sessions
-- Auto-generated chat titles using Claude
+- Auto-generated chat titles using Gemini
 - Markdown rendering with syntax highlighting
 
 **Document Intelligence**
 - Upload and store any text document
-- One-click AI summarization (3–5 sentence summaries via Claude)
+- One-click AI summarization (3–5 sentence summaries via Gemini)
 - Word count tracking and document history
 
 **Authentication & Security**
@@ -57,8 +57,8 @@
 └──────────┬──────────────────────────┬───────────────────────┘
            │                          │
 ┌──────────▼──────────┐    ┌──────────▼──────────────────────┐
-│    PostgreSQL 15     │    │     Anthropic Claude API         │
-│  users · sessions   │    │  claude-sonnet-4-20250514        │
+│    PostgreSQL 15     │    │     Google Gemini API         │
+│  users · sessions   │    │  gemini-2.0-flash        │
 │  messages · docs    │    │  Streaming · Summarization       │
 └─────────────────────┘    └──────────────────────────────────┘
 ```
@@ -73,7 +73,7 @@
 | State       | Zustand                                 |
 | Backend     | Python 3.11, FastAPI, Uvicorn           |
 | Database    | PostgreSQL 15, SQLAlchemy 2, Alembic    |
-| AI          | Anthropic Claude API (`anthropic` SDK)  |
+| AI          | Google Gemini API (`google-generativeai` SDK)  |
 | Auth        | JWT (python-jose), Bcrypt (passlib)     |
 | Testing     | Pytest, FastAPI TestClient              |
 | DevOps      | Docker, Docker Compose, GitHub Actions  |
@@ -86,12 +86,12 @@
 ### Prerequisites
 
 - Docker & Docker Compose
-- An Anthropic API key — [get one here](https://console.anthropic.com)
+- An Anthropic API key — [get one here](https://aistudio.google.com)
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/lumina.git
+git clone https://github.com/21Vyshnavi/lumina.git
 cd lumina
 ```
 
@@ -104,7 +104,7 @@ cp .env.example .env
 Open `.env` and set your Anthropic API key:
 
 ```env
-ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxx
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 ### 3. Start everything with Docker Compose
@@ -137,7 +137,7 @@ pip install -r requirements.txt
 # Set environment variables
 export DATABASE_URL=postgresql://lumina:lumina_secret@localhost:5432/lumina_db
 export SECRET_KEY=your_secret_key
-export ANTHROPIC_API_KEY=sk-ant-xxxxx
+export GEMINI_API_KEY=sk-ant-xxxxx
 
 # Run
 uvicorn app.main:app --reload --port 8000
@@ -206,7 +206,7 @@ Tests cover: auth registration, login, JWT validation, document CRUD, session ma
 1. Push code to GitHub
 2. Go to [render.com](https://render.com) → New → Blueprint
 3. Connect your GitHub repo — Render auto-detects `render.yaml`
-4. Add your `ANTHROPIC_API_KEY` in the Render dashboard under the backend service's environment variables
+4. Add your `GEMINI_API_KEY` in the Render dashboard under the backend service's environment variables
 5. Click **Deploy**
 
 ### CI/CD Secrets (GitHub)
@@ -226,8 +226,8 @@ Add these secrets to your GitHub repository (`Settings → Secrets → Actions`)
 |-----------------------------|----------|----------------------|------------------------------------|
 | `DATABASE_URL`              | Yes      | —                    | PostgreSQL connection string        |
 | `SECRET_KEY`                | Yes      | —                    | JWT signing secret (use long random)|
-| `ANTHROPIC_API_KEY`         | Yes      | —                    | Your Anthropic API key              |
-| `CLAUDE_MODEL`              | No       | claude-sonnet-4-...  | Claude model to use                 |
+| `GEMINI_API_KEY`         | Yes      | —                    | Your Anthropic API key              |
+| `GEMINI_MODEL`              | No       | claude-sonnet-4-...  | Claude model to use                 |
 | `ACCESS_TOKEN_EXPIRE_MINUTES`| No      | 1440 (24h)           | JWT expiry                          |
 | `ALLOWED_ORIGINS`           | No       | localhost variants   | CORS allowed origins                |
 | `VITE_API_URL`              | No       | http://localhost:8000| Frontend → backend URL              |
